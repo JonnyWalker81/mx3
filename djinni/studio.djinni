@@ -1,0 +1,3 @@
+studio = interface +c {
+    login(username: string, password: string);
+}
