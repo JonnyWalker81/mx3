@@ -10,3 +10,4 @@
 #import "gen/MX3UserListVmHandle.h"
 #import "gen/MX3UserListVmObserver.h"
 #import "gen/MX3UserListVm.h"
+#import "gen/MX3Studio.h"

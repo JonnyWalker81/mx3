@@ -15,6 +15,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var api = ViewController.makeApi()
     var handle: MX3UserListVmHandle? = nil
     var viewModel: MX3UserListVm? = nil
+    var studioClient: MX3Studio? = nil
 
     class func makeApi() -> MX3Api {
         // give mx3 a root folder to work in
@@ -62,6 +63,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.view.addConstraints(vertical)
 
         handle = api.observerUserList()
+
+        let httpImpl = MX3HttpObjc()
+        let launcher = MX3ThreadLauncherObjc()
+        studioClient = MX3Studio.createStudioClient(httpImpl, launcher: launcher)
+        studioClient?.login("jrothberg@bluebeam.com", password: "password")
     }
 
     override func viewWillAppear(animated:Bool){
