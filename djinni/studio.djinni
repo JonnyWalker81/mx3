@@ -1,6 +1,12 @@
 @import "thread.djinni"
 
+SessionsDto = interface +o +j {
+	getName(): string;
+	getId(): string;
+}
+
 studio = interface +c {
     static createStudioClient(http_impl:http, launcher: thread_launcher): studio;
     login(username: string, password: string);
+    getSessions(): list<SessionsDto>;
 }

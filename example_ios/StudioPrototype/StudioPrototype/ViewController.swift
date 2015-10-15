@@ -67,7 +67,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let httpImpl = MX3HttpObjc()
         let launcher = MX3ThreadLauncherObjc()
         studioClient = MX3Studio.createStudioClient(httpImpl, launcher: launcher)
-        studioClient?.login("jrothberg@bluebeam.com", password: "password")
+        studioClient?.login("jrothberg@bluebeam.com", password: "kingcon0")
+        let sessions = studioClient?.getSessions()
     }
 
     override func viewWillAppear(animated:Bool){

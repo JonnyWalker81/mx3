@@ -45,7 +45,7 @@ github::get_users(mx3::Http http, optional<uint64_t> since, function<void(vector
         url += "?since=" + std_patch::to_string(*since);
     }
 
-    http.get(url, [callback] (mx3::HttpResponse resp) {
+    http.get(url, nullopt, [callback] (mx3::HttpResponse resp) {
         if (resp.error) {
             return;
         }

@@ -4,5 +4,6 @@ http_callback = interface +c {
 }
 
 http = interface +o +j {
-    get(url: string, callback: http_callback);
+    get(url: string, headers: optional<map<string, string>>, callback: http_callback);
+    post(url: string, body: string, headers: optional<map<string, string>>, callback: http_callback);
 }

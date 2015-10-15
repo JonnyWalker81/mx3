@@ -15,7 +15,8 @@ struct HttpResponse {
 class Http final {
   public:
     Http(shared_ptr<mx3_gen::Http> http_impl, const shared_ptr<SingleThreadTaskRunner> & runner);
-    void get(const string& url, function<void(HttpResponse)>);
+    void get(const string& url, const std::experimental::optional<std::unordered_map<std::string, std::string>> & headers, function<void(HttpResponse)>);
+    void post(const string& url, const string& body, const std::experimental::optional<std::unordered_map<std::string, std::string>> & headers, function<void(HttpResponse)>);
   private:
     class Request final : public mx3_gen::HttpCallback {
       public:
