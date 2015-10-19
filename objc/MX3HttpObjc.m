@@ -48,6 +48,7 @@
         for (NSString *key in headers)
         {
             NSString *header = [headers objectForKey:key];
+            NSLog(@"Header Key: %@, Header Value: %@", key, header);
             [request setValue:header forHTTPHeaderField:key];
         }
     }

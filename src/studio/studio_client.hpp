@@ -11,19 +11,23 @@
 #include "../interface/api.hpp"
 #include "../interface/studio.hpp"
 #include "../interface/SessionsDto.hpp"
+#include "../interface/studio_observer.hpp"
 #include "single_thread_task_runner.hpp"
 #include "studio_dto.hpp"
+#include "studio_vm.hpp"
 
-class studio_client : public mx3_gen::Studio{
+class studio_client : public mx3_gen::StudioVm,
+                      public std::enable_shared_from_this<studio_client>{
 public:
-    studio_client(const std::shared_ptr<mx3_gen::Http> &pHttp, const shared_ptr<mx3::SingleThreadTaskRunner>& bg_runner);
+    studio_client(const std::shared_ptr<mx3_gen::Http> &pHttp, const shared_ptr<mx3::SingleThreadTaskRunner>& bg_runner, const std::shared_ptr<mx3_gen::StudioObserver> & studioObserver);
     virtual void login(const std::string &username, const std::string &password);
-    virtual std::vector<std::shared_ptr<mx3_gen::SessionsDto>> getSessions();
+    virtual void getSessions();
 
 
 private:
     mx3::Http _http;
     AuthorizeResponseDto _authDto;
+    const std::shared_ptr<mx3_gen::StudioObserver> _observer;
 };
 
 

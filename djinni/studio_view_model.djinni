@@ -1,11 +1,13 @@
 @import "thread.djinni"
-
-studio_vm = interface +c {
-	static createStudioClient(http_impl:http, launcher: thread_launcher): studio;
-    login(username: string, password: string);
-    getSessions(): list<SessionsDto>;
-}
+@import "studio.djinni"
 
 studio_observer = interface +o +j {
-	OnLogin()
+	OnLogin();
+	OnSessionsRetrieved(sessions: list<SessionsDto>);
+}
+
+studio_vm = interface +c {
+	static createStudioClient(http_impl:http, launcher: thread_launcher, studioObserver: studio_observer): studio_vm;
+    login(username: string, password: string);
+    getSessions();
 }

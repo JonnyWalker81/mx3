@@ -8,16 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MX3UserListVmObserver{
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MX3StudioObserver/*, MX3UserListVmObserver*/{
     private var CellIdentifier = "UserCellIdentifier"
 
     var usersTable = UITableView()
-    var api = ViewController.makeApi()
-    var handle: MX3UserListVmHandle? = nil
-    var viewModel: MX3UserListVm? = nil
-    var studioClient: MX3Studio? = nil
+    //var api = ViewController.makeApi()
+    //var handle: MX3UserListVmHandle? = nil
+    //var viewModel: MX3UserListVm? = nil
+    var studioClient: MX3StudioVm? = nil
 
-    class func makeApi() -> MX3Api {
+    /*class func makeApi() -> MX3Api {
         // give mx3 a root folder to work in
         // todo, make sure that the path exists before passing it to mx3 c++
         let documentsFolder = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).last
@@ -42,6 +42,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         return api!;
     }
+    */
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,17 +63,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.view.addConstraints(tableWidth)
         self.view.addConstraints(vertical)
 
-        handle = api.observerUserList()
+        //handle = api.observerUserList()
 
         let httpImpl = MX3HttpObjc()
         let launcher = MX3ThreadLauncherObjc()
-        studioClient = MX3Studio.createStudioClient(httpImpl, launcher: launcher)
+        studioClient = MX3StudioVm.createStudioClient(httpImpl, launcher: launcher, studioObserver: self)
         studioClient?.login("jrothberg@bluebeam.com", password: "kingcon0")
-        let sessions = studioClient?.getSessions()
+        //let sessions = studioClient?.getSessions()
     }
 
     override func viewWillAppear(animated:Bool){
-        handle?.start(self)
+        //handle?.start(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -80,8 +81,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Dispose of any resources that can be recreated.
     }
 
-    func onUpdate(changes: [AnyObject]?, newData newD:MX3UserListVm?){
-        //print("onUpdate...")
+    func OnLogin(){
+        print("Logged in callback...")
+        self.studioClient?.getSessions()
+    }
+
+    func OnSessionsRetrieved(sessions: [AnyObject]?){
+        print("OnSessionsRetreived")
+
+        if let sessionsArr = sessions as? [MX3SessionsDto]{
+            for s in sessionsArr {
+                print("Name: \(s.name), ID: \(s.id)")
+            }
+        }
+    }
+
+    /*func onUpdate(changes: [AnyObject]?, newData newD:MX3UserListVm?){
+        print("onUpdate...")
         if(changes != nil){
             if let changeArr = changes as? [MX3ListChange] {
                 //print("Handle if case...")
@@ -111,13 +127,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.usersTable.reloadData()
         }
     }
+    */
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(self.viewModel != nil){
+        /*if(self.viewModel != nil){
             if let vm = self.viewModel {
                 return Int(vm.count())
             }
         }
+        */
 
         return 0
     }
@@ -126,21 +144,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier, forIndexPath: indexPath)
 
         //cell.textLabel?.text = "Test"
-        if let vm = self.viewModel {
+        /*if let vm = self.viewModel {
             var cellData = vm.get(Int32(indexPath.row))
             cell.textLabel?.text = cellData?.name;
             cell.detailTextLabel?.text = "If you manage to get the deps right";
         }
+        */
 
 
         return cell
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //print("didSelectRow...")
-        if let vm = self.viewModel{
+        print("didSelectRow...")
+        /*if let vm = self.viewModel{
             vm.deleteRow(Int32(indexPath.row))
         }
+        */
     }
 }
 

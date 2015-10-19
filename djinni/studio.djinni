@@ -1,8 +1,8 @@
 @import "thread.djinni"
 
-SessionsDto = interface +o +j {
-	getName(): string;
-	getId(): string;
+SessionsDto = record {
+	name: string;
+	id: string;
 }
 
 studio = interface +c {
