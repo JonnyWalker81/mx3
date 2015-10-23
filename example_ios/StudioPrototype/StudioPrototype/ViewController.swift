@@ -8,14 +8,25 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MX3StudioObserver/*, MX3UserListVmObserver*/{
-    private var CellIdentifier = "UserCellIdentifier"
+class TableCell : UITableViewCell{
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?){
+        super.init(style: UITableViewCellStyle.Subtitle, reuseIdentifier: reuseIdentifier)
+    }
 
+    required init?(coder aDecoder: NSCoder){
+        super.init(coder: aDecoder)
+    }
+}
+
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MX3StudioObserver/*, MX3UserListVmObserver*/{
+
+    private var CellIdentifier = "UserCellIdentifier"
     var usersTable = UITableView()
     //var api = ViewController.makeApi()
     //var handle: MX3UserListVmHandle? = nil
     //var viewModel: MX3UserListVm? = nil
     var studioClient: MX3StudioVm? = nil
+    var _studioSessionsVm: MX3StudioSessionsVm? = nil
 
     /*class func makeApi() -> MX3Api {
         // give mx3 a root folder to work in
@@ -67,9 +78,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         let httpImpl = MX3HttpObjc()
         let launcher = MX3ThreadLauncherObjc()
-        studioClient = MX3StudioVm.createStudioClient(httpImpl, launcher: launcher, studioObserver: self)
+        let uiThread = MX3EventLoopObjc()
+        studioClient = MX3StudioVm.createStudioClient(httpImpl, uiThread: uiThread, launcher: launcher, studioObserver: self)
         studioClient?.login("jrothberg@bluebeam.com", password: "kingcon0")
         //let sessions = studioClient?.getSessions()
+        _studioSessionsVm = studioClient?.getSessionsVm()
+
+        self.usersTable.registerClass(TableCell.classForCoder(), forCellReuseIdentifier: CellIdentifier)
     }
 
     override func viewWillAppear(animated:Bool){
@@ -94,6 +109,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 print("Name: \(s.name), ID: \(s.id)")
             }
         }
+
+        self.usersTable.reloadData();
     }
 
     /*func onUpdate(changes: [AnyObject]?, newData newD:MX3UserListVm?){
@@ -130,12 +147,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     */
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        /*if(self.viewModel != nil){
-            if let vm = self.viewModel {
-                return Int(vm.count())
+        if(self.studioClient != nil){
+            if let vm = self.studioClient {
+                return Int(vm.getSessionCount())
             }
         }
-        */
 
         return 0
     }
@@ -144,23 +160,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier, forIndexPath: indexPath)
 
         //cell.textLabel?.text = "Test"
-        /*if let vm = self.viewModel {
-            var cellData = vm.get(Int32(indexPath.row))
-            cell.textLabel?.text = cellData?.name;
-            cell.detailTextLabel?.text = "If you manage to get the deps right";
+        if let vm = self.studioClient {
+            let cellData = vm.getSession(Int32(indexPath.row))
+            cell.textLabel?.text = cellData?.sessionName;
+            cell.detailTextLabel?.text = cellData?.sessionId;
         }
-        */
-
 
         return cell
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("didSelectRow...")
-        /*if let vm = self.viewModel{
-            vm.deleteRow(Int32(indexPath.row))
+        if let vm = self.studioClient{
+            let cellData = vm.getSession(Int32(indexPath.row))
+            let sessionController = SessionController(studioClient: self.studioClient!, sessionCell: cellData!)
+            self.navigationController?.pushViewController(sessionController, animated: true)
         }
-        */
     }
 }
 

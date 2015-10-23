@@ -1,10 +1,5 @@
 @import "thread.djinni"
 
-SessionsDto = record {
-	name: string;
-	id: string;
-}
-
 studio = interface +c {
     static createStudioClient(http_impl:http, launcher: thread_launcher): studio;
     login(username: string, password: string);

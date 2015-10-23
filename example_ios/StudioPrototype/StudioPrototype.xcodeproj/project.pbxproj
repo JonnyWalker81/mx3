@@ -22,6 +22,11 @@
 		417FC5541BC8ADFB0034FA79 /* libdjinni_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 417FC5531BC8ADFB0034FA79 /* libdjinni_objc.a */; };
 		417FC5561BC8AE660034FA79 /* libjson11.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 417FC5551BC8AE660034FA79 /* libjson11.a */; };
 		417FC5581BC8AE700034FA79 /* libsqlite3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 417FC5571BC8AE700034FA79 /* libsqlite3.a */; };
+		624961B61A936B1687E34FD4 /* SessionAttendees.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62496868B06F3CE1E6F1AE0A /* SessionAttendees.swift */; };
+		624967489C89BB93EF9AF650 /* SessionChats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6249615F0518F45C0A14DB87 /* SessionChats.swift */; };
+		624969FC00ABA1A691B10D00 /* SessionDocuments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6249633749A6637FD3920AA3 /* SessionDocuments.swift */; };
+		62496D5CE24C01D44CC72F4D /* StudioNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624960C00572CD5C7CEEBB57 /* StudioNavigator.swift */; };
+		62496E7AE0C3FD99FBD432C8 /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624969515FC65A9D4E21D723 /* SessionController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +130,11 @@
 		417FC5531BC8ADFB0034FA79 /* libdjinni_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdjinni_objc.a; path = "../../deps/djinni/support-lib/build/Debug-iphoneos/libdjinni_objc.a"; sourceTree = "<group>"; };
 		417FC5551BC8AE660034FA79 /* libjson11.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjson11.a; path = "../../deps/build/Debug-iphoneos/libjson11.a"; sourceTree = "<group>"; };
 		417FC5571BC8AE700034FA79 /* libsqlite3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsqlite3.a; path = "../../deps/build/Debug-iphoneos/libsqlite3.a"; sourceTree = "<group>"; };
+		624960C00572CD5C7CEEBB57 /* StudioNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudioNavigator.swift; sourceTree = "<group>"; };
+		6249615F0518F45C0A14DB87 /* SessionChats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionChats.swift; sourceTree = "<group>"; };
+		6249633749A6637FD3920AA3 /* SessionDocuments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDocuments.swift; sourceTree = "<group>"; };
+		62496868B06F3CE1E6F1AE0A /* SessionAttendees.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionAttendees.swift; sourceTree = "<group>"; };
+		624969515FC65A9D4E21D723 /* SessionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +213,11 @@
 				417FC42D1BC80CB40034FA79 /* LaunchScreen.storyboard */,
 				417FC4301BC80CB40034FA79 /* Info.plist */,
 				417FC4681BC80DFC0034FA79 /* StudioPrototype-Bridging-Header.h */,
+				624960C00572CD5C7CEEBB57 /* StudioNavigator.swift */,
+				624969515FC65A9D4E21D723 /* SessionController.swift */,
+				6249633749A6637FD3920AA3 /* SessionDocuments.swift */,
+				62496868B06F3CE1E6F1AE0A /* SessionAttendees.swift */,
+				6249615F0518F45C0A14DB87 /* SessionChats.swift */,
 			);
 			path = StudioPrototype;
 			sourceTree = "<group>";
@@ -424,6 +439,11 @@
 			files = (
 				417FC4271BC80CB40034FA79 /* ViewController.swift in Sources */,
 				417FC4251BC80CB40034FA79 /* AppDelegate.swift in Sources */,
+				62496D5CE24C01D44CC72F4D /* StudioNavigator.swift in Sources */,
+				62496E7AE0C3FD99FBD432C8 /* SessionController.swift in Sources */,
+				624969FC00ABA1A691B10D00 /* SessionDocuments.swift in Sources */,
+				624961B61A936B1687E34FD4 /* SessionAttendees.swift in Sources */,
+				624967489C89BB93EF9AF650 /* SessionChats.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,6 +609,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "StudioPrototype/StudioPrototype-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../deps\"/**";
 			};
 			name = Debug;
 		};
@@ -609,6 +630,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bluebeam.prototype.StudioPrototype;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "StudioPrototype/StudioPrototype-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/../deps\"/**";
 			};
 			name = Release;
 		};

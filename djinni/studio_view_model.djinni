@@ -1,13 +1,55 @@
 @import "thread.djinni"
 @import "studio.djinni"
 
+SessionsDto = record {
+	name: string;
+	id: string;
+}
+
+SessionDocumentDto = record {
+	name: string;
+	id: string;
+}
+
+studio_session_cell = record {
+	session_id: string;
+	session_name: string;
+}
+
+studio_document_cell = record {
+	document_id: string;
+	document_name: string;
+}
+
 studio_observer = interface +o +j {
 	OnLogin();
-	OnSessionsRetrieved(sessions: list<SessionsDto>);
+}
+
+studio_sessions_observer = interface +o +j {
+	OnSessionsRetrieved(sessions: optional<list<SessionsDto>>);	
+}
+
+studio_sessions_documents_observer = interface +o +j {
+	OnDocumentsRetrieved(documents: optional<list<SessionDocumentDto>>);
 }
 
 studio_vm = interface +c {
-	static createStudioClient(http_impl:http, launcher: thread_launcher, studioObserver: studio_observer): studio_vm;
+	static createStudioClient(http_impl:http, ui_thread: event_loop, launcher: thread_launcher, studioObserver: studio_observer): studio_vm;
     login(username: string, password: string);
-    getSessions();
+    get(url: string, headers: optional<map<string, string>>, callback: http_callback);
+    post(url: string, body: string, headers: optional<map<string, string>>, callback: http_callback);
+   	getSessionsVm(observer: optional<studio_sessions_observer>): optional<studio_sessions_vm>;
+   	getSessionDocumentsVm(observer: optional<studio_sessions_documents_observer>): optional<studio_session_documents_vm>;
+}
+
+studio_sessions_vm = interface +c {
+	getSessions();
+    getSession(index: i32): optional<studio_session_cell>;
+    getSessionCount(): i32;
+}
+
+studio_session_documents_vm = interface +c {
+	getDocuments();
+    getDocumentCount(): i32;
+    getDocument(index: i32): optional<studio_document_cell>;
 }
